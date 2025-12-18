@@ -1,3 +1,21 @@
+Patchded CurlFTPFS-NG to work with curl 8.16+
+=============================================
+
+The Patch is already applied, just clone the repo and build according to the manual below.
+"curlftpfs.patch" is also added to the master branch for archiving purpose.
+
+Source: https://sourceforge.net/p/curlftpfs/patches/16/
+  """
+  libcurl 8.17.0 dropped support for Kerberos FTP, which results in the 
+  curl_easy_setopt_or_die(..., CURLOPT_KRB4LEVEL, ...) call failing
+  with an inscrutable message. The attached patch checks the libcurl version
+  and errors if the krb4 mount option is set and libcurl is too new.
+  """
+
+
+Original README
+===============
+
 CurlFtpFS-NG 0.9.3-next
 
 This is a fork of the unmaintained CurlFtpFS.  I don't have any great plans,
