@@ -63,6 +63,7 @@ struct ftpfs {
   size_t symlink_prefix_len;
   curl_version_info_data* curl_version;
   int safe_nobody;
+  int krb_supported
   int tryutf8;
   char *codepage;
   char *iocharset;
