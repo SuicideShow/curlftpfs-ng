@@ -31,6 +31,7 @@
 
 #define CURLFTPFS_BAD_NOBODY 0x070f02
 #define CURLFTPFS_BAD_SSL 0x070f03
+#define CURLFTPFS_NO_KRB_SUPPORT 0x081100
 
 #define CURLFTPFS_BAD_READ ((size_t)-1)
 
@@ -1631,8 +1632,17 @@ static void set_common_curl_stuff(CURL* easy) {
   }
 
   curl_easy_setopt_or_die(easy, CURLOPT_INTERFACE, ftpfs.interface);
-  curl_easy_setopt_or_die(easy, CURLOPT_KRB4LEVEL, ftpfs.krb4);
-  
+
+  if (ftpfs.krb_supported) {
+    curl_easy_setopt_or_die(easy, CURLOPT_KRB4LEVEL, ftpfs.krb4);
+  } else if (ftpfs.krb4) {
+    fprintf(stderr,
+            "krb4 option is set, but libcurl %s no longer supports FTP "
+            "Kerberos\n",
+            ftpfs.curl_version->version);
+    exit(1);
+  }
+
   if (ftpfs.proxy) {
     curl_easy_setopt_or_die(easy, CURLOPT_PROXY, ftpfs.proxy);
   }
@@ -1736,6 +1746,8 @@ int main(int argc, char** argv) {
   // Set some default values
   ftpfs.curl_version = curl_version_info(CURLVERSION_NOW);
   ftpfs.safe_nobody = ftpfs.curl_version->version_num > CURLFTPFS_BAD_NOBODY;
+  ftpfs.krb_supported =
+      ftpfs.curl_version->version_num < CURLFTPFS_NO_KRB_SUPPORT;
   ftpfs.blksize = 4096;
   ftpfs.disable_epsv = 1;
   ftpfs.multiconn = 1;
