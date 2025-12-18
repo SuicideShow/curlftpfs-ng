@@ -1,4 +1,4 @@
-Patchded CurlFtpFS-NG to work with curl 8.16+
+Patchded CurlFtpFS-NG to work with curl 8.17+
 =============================================
 
 The Patch is already applied, just clone the repo and build according to the manual below.
