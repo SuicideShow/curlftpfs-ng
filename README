@@ -12,6 +12,11 @@ Source: https://sourceforge.net/p/curlftpfs/patches/16/
   and errors if the krb4 mount option is set and libcurl is too new.
   """
 
+Use CurlFtpFS with VIFM
+=======================
+https://wiki.vifm.info/index.php?title=How_to_browse_FTP_in_Vifm
+
+____________________________________________________________________________________________
 
 Original README
 ===============
